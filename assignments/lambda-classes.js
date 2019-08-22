@@ -26,6 +26,30 @@ class Instructor extends Person {
     grade(stud, sub) {
         console.log(`${stud.name} receives a perfect score on ${sub}`);
     }
+
+    adjustScore(student) {
+        let pom = Math.round(Math.random());
+        if (pom === 1) {
+            if ((student.grade + 10) > 100) {
+                console.log(`${this.name} could not increase ${student.name}'s grade because it is already 100.`);
+                student.grade = 100;
+            }
+            else {
+                student.grade += 10;
+                console.log(`${this.name} increased ${student.name}'s grade by 10 points to ${student.grade}`);
+            }
+        }
+        else {
+            if ((student.grade - 10) < 0) {
+                console.log(`${this.name} could not decrease ${student.name}'s grade because it is already 0.`);
+                student.grade = 0;
+            }
+            else {
+                student.grade -= 10;
+                console.log(`${this.name} decreased ${student.name}'s grade by 10 points to ${student.grade}`);
+            }
+        }
+    }
 }
 
 class Student extends Person {
@@ -34,6 +58,8 @@ class Student extends Person {
         this.previousBackground = attr.previousBackground;
         this.className = attr.className;
         this.favSubjects = attr.favSubjects;
+        this.grade = Math.floor(Math.random() * Math.floor(100));
+        this.graduated = false;
     }
 
     listSubjects() {
@@ -48,6 +74,13 @@ class Student extends Person {
 
     sprintChallenge(sub) {
         console.log(`${this.name} has begun a sprint challenge on ${sub}`);
+    }
+
+    graduate() {
+        if (this.grade >= 70) {
+            console.log(`${this.name} has graduated!`)
+            this.graduated = true;
+        }
     }
 }
 
@@ -168,3 +201,8 @@ janice.demo('Java');
 janice.grade(bob, 'HTML');
 janice.standUp('Web20');
 janice.debugsCode(bob, 'CSS');
+
+while (!chris.graduated) {
+    sally.adjustScore(chris);
+    chris.graduate();
+}
